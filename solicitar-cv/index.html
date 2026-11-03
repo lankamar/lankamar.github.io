@@ -1,55 +1,34 @@
 <!doctype html>
-<html lang="es">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<title>Solicitar currículum | LANKAMAR</title>
-<style>
-:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#171717;background:#fafafa}
-*{box-sizing:border-box}body{margin:0;padding:2rem 1rem}.wrap{max-width:640px;margin:0 auto}
-a{color:#992e2e}h1{line-height:1.16;font-size:clamp(2rem,5vw,2.8rem)}.marca{font-weight:800;letter-spacing:.17em;color:#a42c2c}
-form{background:white;border:1px solid #e4e4e4;border-radius:14px;padding:1.4rem;box-shadow:0 3px 16px #00000008}
-label{display:block;font-weight:600;margin:1rem 0 .35rem}input[type=email],select{width:100%;padding:.8rem;border:1px solid #a4a4a4;border-radius:7px;font:inherit}
-input:focus,select:focus,button:focus-visible{outline:3px solid #b14343;outline-offset:2px}
-.check{display:flex;gap:.65rem;align-items:flex-start;margin:1.2rem 0}.check label{margin:0;font-weight:400;font-size:.92rem;line-height:1.5}
-button{background:#a42c2c;color:white;border:0;border-radius:7px;padding:.85rem 1.1rem;font:inherit;font-weight:700;cursor:pointer}
-small,.nota{color:#555;line-height:1.6}footer{margin:1.5rem 0;font-size:.9rem}
-</style>
-</head>
-<body><main class="wrap">
-<p class="marca">LANKAMAR</p><h1>Solicitar currículum</h1>
-<p>Elegí la versión que te interese y dejá una dirección de correo. Si el servicio de envío está habilitado, vas a recibir un mensaje con el enlace correspondiente. Se registra tu solicitud para poder responder consultas profesionales.</p>
-<form id="solicitud-cv" method="POST" action="https://formsubmit.co/lankamar@gmail.com">
-<input type="hidden" name="_subject" value="Solicitud de CV — Sitio LANKAMAR">
-<input type="hidden" name="_next" value="https://lankamar.github.io/solicitud-cv-recibida/">
-<input type="hidden" name="_template" value="table">
-<input type="hidden" name="_autoresponse" id="respuesta" value="">
-<label for="correo">Correo electrónico *</label>
-<input id="correo" name="email" type="email" autocomplete="email" placeholder="nombre@empresa.com" required maxlength="254">
-<label for="tipo">Versión del currículum *</label>
-<select id="tipo" name="version_solicitada" required>
-<option value="">Seleccioná una versión</option>
-<option value="Tecnología e IA aplicada">Tecnología e IA aplicada</option>
-<option value="Salud y gestión">Salud y gestión</option>
-<option value="Académico">Académico</option>
-</select>
-<div class="check"><input type="checkbox" id="consiente" name="consentimiento" value="Si" required>
-<label for="consiente">Acepto que mi correo y la versión solicitada sean utilizados exclusivamente para gestionar esta solicitud y, si fuera necesario, responderme. Los datos se remiten mediante FormSubmit al correo del titular. No autorizo publicidad ni suscripciones. *</label></div>
-<button type="submit">Solicitar enlace por correo</button>
-<p class="nota">Se utiliza FormSubmit para procesar el formulario y enviar la notificación a LANKAMAR. Antes del uso público debe activarse y probarse el servicio. La plataforma informa que conserva las solicitudes durante 30 días; el correo de notificación puede permanecer en Gmail hasta su eliminación. Podés solicitar la eliminación de tu registro escribiendo a lankamar@gmail.com.</p>
-</form>
-<footer><a href="/cv">Volver a currículums</a> · <a href="/">Inicio</a> · <a href="https://formsubmit.co/privacy.pdf" target="_blank" rel="noopener noreferrer">Privacidad del procesador</a></footer>
-</main>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="cv-api-base" content="">
+<title>Solicitar CV | LANKAMAR</title>
+<style>body{font:1rem system-ui;line-height:1.6;max-width:640px;margin:3rem auto;padding:1rem}label{display:block;margin-top:1rem}input[type=email],select,button{font:inherit;padding:.7rem;max-width:100%}input[type=email],select{width:100%;box-sizing:border-box}button{margin-top:1rem}a{color:#922b2b}:focus-visible{outline:3px solid #922b2b;outline-offset:3px}.trap{position:absolute;left:-10000px}</style></head>
+<body><main><h1>Solicitar currículum</h1><p>Recibí por correo un enlace de un solo uso, válido durante 30 minutos.</p>
+<form id="solicitud-cv">
+<label for="email">Correo electrónico *</label><input id="email" name="email" type="email" autocomplete="email" maxlength="254" required aria-describedby="uso">
+<label for="version">Versión del currículum *</label><select id="version" name="version" required><option value="">Seleccioná una versión</option><option value="tech">Tecnología e IA aplicada</option><option value="salud">Salud y gestión</option><option value="academico">Académico</option></select>
+<input type="hidden" name="privacy_version" value="2026-11-01">
+<div class="trap" aria-hidden="true"><label for="website">Sitio web</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+<label><input name="consentimiento" type="checkbox" required> Acepto el uso de mis datos para gestionar esta solicitud según el <a href="/privacidad-cv/">aviso de privacidad</a>. *</label>
+<p id="uso">No se utilizan los datos para publicidad ni suscripciones.</p>
+<button type="submit" disabled>Solicitar enlace por correo</button><p id="estado" role="status" aria-live="polite">Servicio pendiente de habilitación.</p>
+<noscript>Este formulario necesita JavaScript. Podés escribir a lankamar@gmail.com.</noscript></form>
+<p><a href="/cv">Volver a currículums</a></p></main>
 <script>
-(function(){
-const cv={
-"Tecnología e IA aplicada":"https://lankamar.github.io/documentos/cv-tech.pdf",
-"Salud y gestión":"https://lankamar.github.io/documentos/cv-salud.pdf",
-"Académico":"https://lankamar.github.io/documentos/cv-academico.pdf"};
-const form=document.getElementById("solicitud-cv"),select=document.getElementById("tipo"),reply=document.getElementById("respuesta");
-form.addEventListener("submit",function(e){
-const link=cv[select.value];if(!link){e.preventDefault();select.focus();return}
-reply.value="Recibimos tu solicitud de CV LANKAMAR ("+select.value+"). Enlace para consultar el documento: "+link+". Esta dirección se utiliza solo para la solicitud que realizaste. Si necesitás más información, respondé este correo o escribí a lankamar@gmail.com.";
+(()=>{
+const form=document.querySelector('form'),button=form.querySelector('button'),status=document.getElementById('estado');
+const base=document.querySelector('meta[name="cv-api-base"]').content.replace(/\/$/,'');
+const version=new URLSearchParams(location.search).get('version');
+if(['tech','salud','academico'].includes(version))form.elements.version.value=version;
+if(!base)return;
+button.disabled=false;status.textContent='';
+form.addEventListener('submit',async event=>{
+event.preventDefault();if(!form.reportValidity())return;button.disabled=true;status.textContent='Enviando solicitud…';
+try{
+const response=await fetch(base+'/request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:form.elements.email.value,version:form.elements.version.value,consent:form.elements.consentimiento.checked,privacy_version:form.elements.privacy_version.value,website:form.elements.website.value})});
+if(response.status===202){location.assign('/solicitud-cv-recibida/');return;}
+status.textContent=response.status===429?'Alcanzaste el límite de solicitudes. Intentá más tarde.':response.status===422?'Revisá el correo, la versión y el consentimiento.':'No pudimos enviar el correo. Intentá más tarde.';
+}catch{status.textContent='No pudimos conectar con el servicio. Intentá más tarde.';}finally{button.disabled=false;}
 });
 })();
 </script></body></html>
